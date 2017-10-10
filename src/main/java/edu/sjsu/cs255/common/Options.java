@@ -1,21 +1,28 @@
 package edu.sjsu.cs255.common;
 
 import java.io.File;
-import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 public class Options {
-	String[] args;
 	
-	@Option(name="-f", usage="Input file")
-	private File inputFile;
+	@Option(name = "-f", aliases = "--file", metaVar = "FILE", usage="Input Dataset")
+	private File inputFile = null;
 	
-	public Options(String[] args) {
-		this.args = args;
+	@Option(name = "-ms", aliases = "--min-support-count", metaVar = "INTEGER", usage = "Minimum Support Count")
+	private int minSupport = 2;
+	
+	@Option(name = "-o", aliases = "--output-file", metaVar = "FILE", usage = "Output file")
+	private File outputFile = null;
+	
+	public File getInputFile() {
+		return inputFile;
 	}
 	
-	public void parse() {
-		CmdLineParser parser = new CmdLineParser(this);
-		
+	public int getMinSupport() {
+		return minSupport;
+	}
+	
+	public File getOutputFile() {
+		return outputFile;
 	}
 }
