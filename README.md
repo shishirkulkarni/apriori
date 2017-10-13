@@ -1,1 +1,1 @@
-# apriori
+# Implementation and Analysis of Apriori Algorithm for Mining Frequent Data Sets
