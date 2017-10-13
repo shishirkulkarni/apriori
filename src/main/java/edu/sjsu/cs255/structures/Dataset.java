@@ -6,9 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import edu.sjsu.cs255.config.Config;
@@ -16,11 +18,11 @@ import edu.sjsu.cs255.exceptions.DuplicateTransactionException;
 import edu.sjsu.cs255.exceptions.InvalidFormatException;
 
 public class Dataset {
-	Map<Integer, List<Integer>> data;
+	Map<Integer, Set<Integer>> data;
 	private Pattern transactionFormat;
 	
 	public Dataset() {
-		this.data = new HashMap<Integer, List<Integer>>();
+		this.data = new HashMap<Integer, Set<Integer>>();
 	}
 	
 	public void loadFromFile(File dataFile) throws InvalidFormatException, IOException, NumberFormatException, DuplicateTransactionException {
@@ -44,7 +46,7 @@ public class Dataset {
 	
 	private void putIntoMap(String line) throws NumberFormatException, DuplicateTransactionException {
 		String []fields = line.split(":");
-		List<Integer> transactions = new ArrayList<Integer>();
+		Set<Integer> transactions = new HashSet<Integer>();
 		
 		// Check for any duplicated transactions
 		if(data.get(Integer.parseInt(fields[0])) != null) {
