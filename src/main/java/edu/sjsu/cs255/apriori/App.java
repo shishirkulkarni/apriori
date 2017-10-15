@@ -1,5 +1,7 @@
 package edu.sjsu.cs255.apriori;
 
+import java.util.ArrayList;
+
 import org.kohsuke.args4j.CmdLineParser;
 
 import edu.sjsu.cs255.common.Options;
@@ -18,8 +20,20 @@ public class App
 			parser.parseArgument(args);
 			d.loadFromFile(o.getInputFile());
 			i.loadItemsFromData();
-			System.out.println(i.generateFrequentItemsets(o.getMinSupport()).generateFrequentItemsets(2));
-
+			ArrayList<Itemset> freqItems = new ArrayList<Itemset>();
+			freqItems.add(0, i);
+			System.out.println(freqItems.get(0));
+			System.out.println("**********");
+			for(int j = 1; ; j++) {
+				Itemset k = freqItems.get(j - 1).generateNextFrequentItemsets(o.getMinSupport());
+				k.prune(freqItems.get(j - 1));
+				if(k.size()==0)
+					break;
+				System.out.println(k);
+				System.out.println("**********");
+				freqItems.add(j,k);
+			}      
+            
 		} catch (Exception e) {
 			System.out.println("In Exception");
 			// TODO Auto-generated catch block

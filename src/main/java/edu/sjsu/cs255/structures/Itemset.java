@@ -1,5 +1,6 @@
 package edu.sjsu.cs255.structures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -22,7 +23,7 @@ public class Itemset {
 		this.d = d;
 	}
 	public void loadItemsFromData() {
-		items.clear(); // Clear any existing itemset
+		items.clear(); // Clear any existing item set
 		
 		Iterator<Integer> it = d.data.keySet().iterator();
 		
@@ -57,7 +58,7 @@ public class Itemset {
 		items.clear();
 	}
 	
-	public Itemset generateFrequentItemsets(int minSupport) {
+	public Itemset generateNextFrequentItemsets(int minSupport) {
 		Itemset candidateItem = new Itemset(this.d);
 		Iterator<Set<Integer>> i = items.keySet().iterator();
 		while(i.hasNext()) {
@@ -67,8 +68,11 @@ public class Itemset {
 				Set<Integer> item2 = j.next();
 				if(item1 == item2)
 					continue;
-				Set<Integer> union = new HashSet<Integer>(item1);
+				Set<Integer> union = new HashSet<Integer>(item1);				
 				union.addAll(item2);
+				//Next item set generated = current item set size + 1
+				if (union.size() != item1.size() + 1)
+					continue;
 				if(getOccurence(union) >= minSupport)
 					candidateItem.insert(union, getOccurence(union));
 			}
@@ -103,4 +107,34 @@ public class Itemset {
 	public int size() {
 		return items.size();
 	}
+	
+	public void prune(Itemset freqItems) {
+		//Get frequent item set
+		//Generate combinations of that item set(n) of the size n-1
+		//If even any one is absent in Frequent item sets of step 1, don't consider
+		Iterator<Set<Integer>> i = items.keySet().iterator();
+
+		while(i.hasNext()) {
+			Set<Integer> item1 = i.next();
+			if(item1.size() < 3)
+        			return;
+			int j;
+			for(j=0;j<item1.size();j++) {
+				ArrayList<Integer> parentSet=new ArrayList<Integer>(item1);	
+				parentSet.remove(j);
+				Set<Integer> subSet = new HashSet<Integer>(parentSet);
+//				System.out.println(subSet);
+				if(!freqItems.subsetExists(subSet))
+					break;
+			}
+			if(j < item1.size()) {
+				items.remove(item1);
+			}
+//			System.out.println("****");
+		}		
+	}
+	
+	private boolean subsetExists(Set<Integer> set){
+		return items.get(set)==null ? false: true;
+	} 
 }
