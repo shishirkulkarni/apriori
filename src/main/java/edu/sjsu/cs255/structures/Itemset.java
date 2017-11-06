@@ -18,6 +18,10 @@ public class Itemset {
 		this.items = new HashMap<Set<Integer>, Integer>();
 	}
 	
+	public List<Set<Integer>> getSets(){
+		return new ArrayList<Set<Integer>>(items.keySet());
+	}
+	
 	public Itemset(Dataset d) { // initialize data set
 		this();
 		this.d = d;
@@ -123,18 +127,20 @@ public class Itemset {
 				ArrayList<Integer> parentSet=new ArrayList<Integer>(item1);	
 				parentSet.remove(j);
 				Set<Integer> subSet = new HashSet<Integer>(parentSet);
-//				System.out.println(subSet);
 				if(!freqItems.subsetExists(subSet))
 					break;
 			}
 			if(j < item1.size()) {
 				items.remove(item1);
 			}
-//			System.out.println("****");
 		}		
 	}
 	
 	private boolean subsetExists(Set<Integer> set){
 		return items.get(set)==null ? false: true;
-	} 
+	}
+	
+	public int getFrequency(Set<Integer> s) {
+		return items.get(s);
+	}
 }

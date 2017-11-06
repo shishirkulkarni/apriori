@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.kohsuke.args4j.CmdLineParser;
 
 import edu.sjsu.cs255.common.Options;
+import edu.sjsu.cs255.structures.AssociationRules;
 import edu.sjsu.cs255.structures.Dataset;
 import edu.sjsu.cs255.structures.Itemset;
 
@@ -20,10 +21,12 @@ public class App
 			parser.parseArgument(args);
 			d.loadFromFile(o.getInputFile());
 			i.loadItemsFromData();
+			
 			ArrayList<Itemset> freqItems = new ArrayList<Itemset>();
 			freqItems.add(0, i);
 			System.out.println(freqItems.get(0));
 			System.out.println("**********");
+			
 			for(int j = 1; ; j++) {
 				Itemset k = freqItems.get(j - 1).generateNextFrequentItemsets(o.getMinSupport());
 				k.prune(freqItems.get(j - 1));
@@ -32,7 +35,10 @@ public class App
 				System.out.println(k);
 				System.out.println("**********");
 				freqItems.add(j,k);
-			}      
+			}
+			AssociationRules rules = new AssociationRules(freqItems);
+			rules.generate(o.getConfidence());
+			
             
 		} catch (Exception e) {
 			System.out.println("In Exception");

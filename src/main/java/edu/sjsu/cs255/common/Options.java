@@ -13,6 +13,9 @@ public class Options {
 	
 	@Option(name = "-o", aliases = "--output-file", metaVar = "FILE", usage = "Output file")
 	private File outputFile = null;
+
+	@Option(name = "-c", aliases = "--confidence", metaVar = "INTEGER", usage = "Confidence")
+	private int confidence = 60;
 	
 	public File getInputFile() {
 		return inputFile;
@@ -25,4 +28,9 @@ public class Options {
 	public File getOutputFile() {
 		return outputFile;
 	}
+	
+	public int getConfidence() {
+		return confidence;
+	}	
+	
 }
