@@ -20,25 +20,22 @@ public class App
         try {
 			parser.parseArgument(args);
 			d.loadFromFile(o.getInputFile());
-			i.loadItemsFromData();
+			i.loadItemsFromData(o.getMinSupport());
 			
 			ArrayList<Itemset> freqItems = new ArrayList<Itemset>();
 			freqItems.add(0, i);
-			System.out.println(freqItems.get(0));
-			System.out.println("**********");
 			
 			for(int j = 1; ; j++) {
 				Itemset k = freqItems.get(j - 1).generateNextFrequentItemsets(o.getMinSupport());
 				k.prune(freqItems.get(j - 1));
 				if(k.size()==0)
 					break;
-				System.out.println(k);
-				System.out.println("**********");
 				freqItems.add(j,k);
 			}
+			
 			AssociationRules rules = new AssociationRules(freqItems);
 			rules.generate(o.getConfidence());
-			
+			System.out.println(rules);
             
 		} catch (Exception e) {
 			System.out.println("In Exception");

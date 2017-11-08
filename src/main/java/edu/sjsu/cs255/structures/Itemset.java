@@ -26,7 +26,8 @@ public class Itemset {
 		this();
 		this.d = d;
 	}
-	public void loadItemsFromData() {
+
+	public void loadItemsFromData(int minSupport) {
 		items.clear(); // Clear any existing item set
 		
 		Iterator<Integer> it = d.data.keySet().iterator();
@@ -43,6 +44,8 @@ public class Itemset {
 					items.put(set,items.get(set) + 1); // increment item count
 			}
 		}
+		
+		filterLowerSupportCountItems(minSupport);
 	}
 	
 	@Override
@@ -99,14 +102,14 @@ public class Itemset {
 		return count;
     }
 	
-/*	private void filterCandidates(int minSupport) {
+	private void filterLowerSupportCountItems(int minSupport) {
 		Iterator<Set<Integer>> i = items.keySet().iterator();
 		while(i.hasNext()) {
 			Set<Integer> item = i.next();
 			if(items.get(item) < minSupport)
 				i.remove();
 		}
-	}*/
+	}
 	
 	public int size() {
 		return items.size();
