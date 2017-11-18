@@ -8,6 +8,9 @@ public class Options {
 	@Option(name = "-f", aliases = "--file", metaVar = "FILE", usage="Input Dataset")
 	private File inputFile = null;
 	
+	@Option(name = "-cat", aliases = "--catalog-file", metaVar = "FILE", usage = "Input Data Catalog")
+	private File catalogFile = null;
+	
 	@Option(name = "-ms", aliases = "--min-support-count", metaVar = "INTEGER", usage = "Minimum Support Count")
 	private int minSupport = 2;
 	
@@ -19,6 +22,10 @@ public class Options {
 	
 	public File getInputFile() {
 		return inputFile;
+	}
+
+	public File getCatalogFile() {
+		return catalogFile;
 	}
 	
 	public int getMinSupport() {

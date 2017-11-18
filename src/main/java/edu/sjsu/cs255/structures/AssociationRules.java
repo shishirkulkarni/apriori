@@ -53,15 +53,47 @@ public class AssociationRules {
 		}
 	}
 	
+	public void printRules(DataCatalog dataCatalog) {
+		StringBuilder stringBuilderRules = new StringBuilder();
+		Iterator<Set<Integer>> iterator = rules.keySet().iterator();
+		
+		if (dataCatalog == null)
+			this.toString();
+		else{	
+			while(iterator.hasNext()) {
+				Set<Integer> itemids = iterator.next();
+				stringBuilderRules.append(this.getMapping(itemids, dataCatalog));
+				stringBuilderRules.append(" recommends -> ");
+				stringBuilderRules.append(this.getMapping(rules.get(itemids), dataCatalog));
+				stringBuilderRules.append("\n");
+			}
+			System.out.println(stringBuilderRules.toString());
+		}	
+	}
+	
+	private List<String> getMapping(Set<Integer> itemids, DataCatalog dataCatalog) {
+		List<String> itemNames = new ArrayList<String>();
+		Iterator<Integer> iterator = itemids.iterator();
+		while(iterator.hasNext()) {
+			String itemName = dataCatalog.getName(iterator.next());
+			if(itemName!=null)
+				itemNames.add(itemName);
+			else
+				itemNames.add("Item name not found");
+		}
+		return itemNames;
+	}
+	
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		StringBuilder s = new StringBuilder();
-		Iterator<Set<Integer>> i = rules.keySet().iterator();
-		while(i.hasNext()) {
-			Set<Integer> set = i.next();
+		Iterator<Set<Integer>> iteratorRules = rules.keySet().iterator();
+		while(iteratorRules.hasNext()) {
+			Set<Integer> set = iteratorRules.next();
 			s.append(set);
-			s.append(" -> ");
+			s.append(" recommends -> ");
 			s.append(rules.get(set));
 			s.append("\n");
 		}

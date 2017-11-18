@@ -6,6 +6,7 @@ import org.kohsuke.args4j.CmdLineParser;
 
 import edu.sjsu.cs255.common.Options;
 import edu.sjsu.cs255.structures.AssociationRules;
+import edu.sjsu.cs255.structures.DataCatalog;
 import edu.sjsu.cs255.structures.Dataset;
 import edu.sjsu.cs255.structures.Itemset;
 
@@ -17,9 +18,12 @@ public class App
         CmdLineParser parser = new CmdLineParser(o);
         Dataset d = new Dataset();
         Itemset i = new Itemset(d);
+        DataCatalog catalog = new DataCatalog();
+        
         try {
 			parser.parseArgument(args);
 			d.loadFromFile(o.getInputFile());
+			catalog.loadFromFile(o.getCatalogFile());
 			i.loadItemsFromData(o.getMinSupport());
 			
 			ArrayList<Itemset> freqItems = new ArrayList<Itemset>();
@@ -36,6 +40,7 @@ public class App
 			AssociationRules rules = new AssociationRules(freqItems);
 			rules.generate(o.getConfidence());
 			System.out.println(rules);
+			rules.printRules(catalog);
             
 		} catch (Exception e) {
 			System.out.println("In Exception");
