@@ -15,7 +15,7 @@ public class Options {
 	private File outputFile = null;
 
 	@Option(name = "-c", aliases = "--confidence", metaVar = "INTEGER", usage = "Confidence")
-	private int confidence = 90;
+	private int confidence = 30;
 	
 	public File getInputFile() {
 		return inputFile;
