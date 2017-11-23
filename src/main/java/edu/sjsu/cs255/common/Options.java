@@ -20,6 +20,9 @@ public class Options {
 	@Option(name = "-c", aliases = "--confidence", metaVar = "INTEGER", usage = "Confidence")
 	private int confidence = 30;
 	
+	@Option(name = "-g", aliases = "--graph", metaVar = "FILE", usage="Graph file")
+	private File graphFile = null;
+	
 	public File getInputFile() {
 		return inputFile;
 	}
@@ -38,6 +41,10 @@ public class Options {
 	
 	public int getConfidence() {
 		return confidence;
-	}	
+	}
+	
+	public File getGraphFile() {
+		return graphFile;
+	}
 	
 }

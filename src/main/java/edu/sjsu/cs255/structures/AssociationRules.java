@@ -100,4 +100,13 @@ public class AssociationRules {
 		
 		return s.toString();
 	}
+	
+	public Set<Set<Integer>> keySet() {
+		return rules.keySet();
+	}
+	
+	public Set<Integer> getImplications(Set<Integer> key) {
+		return rules.get(key);
+	}
+	
 }

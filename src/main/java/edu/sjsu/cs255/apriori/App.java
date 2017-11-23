@@ -9,6 +9,8 @@ import edu.sjsu.cs255.structures.AssociationRules;
 import edu.sjsu.cs255.structures.DataCatalog;
 import edu.sjsu.cs255.structures.Dataset;
 import edu.sjsu.cs255.structures.Itemset;
+import edu.sjsu.cs255.structures.NetworkGraph;
+import edu.sjsu.cs255.structures.Recommendations;
 
 public class App 
 {
@@ -41,11 +43,16 @@ public class App
 			rules.generate(o.getConfidence());
 			System.out.println(rules);
 			rules.printRules(catalog);
+			NetworkGraph g = new NetworkGraph();
+			g.loadFromFile(o.getGraphFile());
+			Recommendations reco = new Recommendations();
+			reco.generateRecommendations(g, rules, d);
+			System.out.println(reco);
             
 		} catch (Exception e) {
-			System.out.println("In Exception");
+			e.printStackTrace();
 			// TODO Auto-generated catch block
-			System.out.println(e);
+//			System.out.println(e);
 			System.exit(0);
 		}
     }

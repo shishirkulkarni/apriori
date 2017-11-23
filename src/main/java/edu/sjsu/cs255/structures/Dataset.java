@@ -76,5 +76,9 @@ public class Dataset {
 	public void clear() {
 		data.clear();
 	}
+	
+	public Set<Integer> getShoppingList(int ID) {
+		return data.get(ID);
+	}
 
 }
