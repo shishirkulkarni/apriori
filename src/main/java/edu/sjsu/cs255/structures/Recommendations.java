@@ -45,4 +45,18 @@ public class Recommendations {
 	public String toString() {
 		return recommendationMap.toString();	
 	}
+	
+	public void printRecommendations(DataCatalog catalog, PersonCatalog personNames) {
+		Iterator<Integer> personIterator = this.recommendationMap.keySet().iterator(); 
+		while(personIterator.hasNext()) {
+			Integer person = personIterator.next();
+			System.out.print(personNames.getName(person)+": ");
+			Iterator<Integer> ruleIterator = recommendationMap.get(person).iterator();
+			while(ruleIterator.hasNext()) {
+				Integer rule = ruleIterator.next();
+				System.out.print(catalog.getName(rule)+" ");
+			}
+			System.out.println();
+		}
+	}
 }

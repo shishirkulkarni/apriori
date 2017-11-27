@@ -23,6 +23,9 @@ public class Options {
 	@Option(name = "-g", aliases = "--graph", metaVar = "FILE", usage="Graph file")
 	private File graphFile = null;
 	
+	@Option(name = "-p", aliases = "--person-catalog", metaVar = "FILE", usage="Person Catalog file")
+	private File personsFile = null;
+	
 	public File getInputFile() {
 		return inputFile;
 	}
@@ -46,5 +49,8 @@ public class Options {
 	public File getGraphFile() {
 		return graphFile;
 	}
-	
+
+	public File getPersonCatalogFile() {
+		return personsFile;
+	}
 }

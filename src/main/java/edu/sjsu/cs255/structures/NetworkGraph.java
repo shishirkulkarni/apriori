@@ -35,10 +35,14 @@ public class NetworkGraph {
 		BufferedReader reader = new BufferedReader(new FileReader(f));
 		String s;
 		while((s = reader.readLine()) != null) {
-			if(!isValid(s))
-				throw new InvalidFormatException("Line format invalid!!!");
+			if(!isValid(s)) {
+				System.out.println(s);
+				reader.close();
+				throw new InvalidFormatException("Line format invalid!!!");		
+			}
 			putIntoGraph(s);
 		}
+		reader.close();
 	
 	}
 	

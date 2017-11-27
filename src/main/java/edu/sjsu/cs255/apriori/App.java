@@ -10,6 +10,7 @@ import edu.sjsu.cs255.structures.DataCatalog;
 import edu.sjsu.cs255.structures.Dataset;
 import edu.sjsu.cs255.structures.Itemset;
 import edu.sjsu.cs255.structures.NetworkGraph;
+import edu.sjsu.cs255.structures.PersonCatalog;
 import edu.sjsu.cs255.structures.Recommendations;
 
 public class App 
@@ -21,12 +22,14 @@ public class App
         Dataset d = new Dataset();
         Itemset i = new Itemset(d);
         DataCatalog catalog = new DataCatalog();
+        PersonCatalog personNames = new PersonCatalog();
         
         try {
 			parser.parseArgument(args);
 			d.loadFromFile(o.getInputFile());
 			catalog.loadFromFile(o.getCatalogFile());
 			i.loadItemsFromData(o.getMinSupport());
+			personNames.loadFromFile(o.getPersonCatalogFile());
 			
 			ArrayList<Itemset> freqItems = new ArrayList<Itemset>();
 			freqItems.add(0, i);
@@ -41,13 +44,17 @@ public class App
 			
 			AssociationRules rules = new AssociationRules(freqItems);
 			rules.generate(o.getConfidence());
-			System.out.println(rules);
 			rules.printRules(catalog);
+			System.out.println(rules);
+			
 			NetworkGraph g = new NetworkGraph();
 			g.loadFromFile(o.getGraphFile());
+			
+			System.out.println("Product Recommendations for:");
 			Recommendations reco = new Recommendations();
 			reco.generateRecommendations(g, rules, d);
 			System.out.println(reco);
+			reco.printRecommendations(catalog, personNames);
             
 		} catch (Exception e) {
 			e.printStackTrace();
