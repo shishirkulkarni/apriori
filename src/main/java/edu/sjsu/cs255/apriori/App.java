@@ -45,7 +45,6 @@ public class App
 			AssociationRules rules = new AssociationRules(freqItems);
 			rules.generate(o.getConfidence());
 			rules.printRules(catalog);
-			System.out.println(rules);
 			
 			NetworkGraph g = new NetworkGraph();
 			g.loadFromFile(o.getGraphFile());
@@ -53,7 +52,6 @@ public class App
 			System.out.println("Product Recommendations for:");
 			Recommendations reco = new Recommendations();
 			reco.generateRecommendations(g, rules, d);
-			System.out.println(reco);
 			reco.printRecommendations(catalog, personNames);
             
 		} catch (Exception e) {
